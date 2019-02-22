@@ -1,0 +1,9 @@
+version: "3"
+services:
+  web:
+    container_name: dwoole_example
+    image: leocavalcante/dwoole:1.0-development
+    volumes:
+      - ./:/app
+    ports:
+      - "9501:9501"
