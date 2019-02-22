@@ -4,8 +4,8 @@ ADD docker-entrypoint.sh /usr/local/bin
 ADD get-composer.sh /usr/local/bin
 ADD watch.php /usr/local/bin
 
-RUN apt-get update && apt-get install -y \
-  wget git unzip
+RUN apt-get update && apt-get install -y git unzip wget \
+  && rm -rf /var/lib/apt/lists/*
 
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 

@@ -1,7 +1,12 @@
 <?php declare(strict_types=1);
 
-if (!file_exists('/app/index.php')) {
-    echo "Entrypoint file (index.php) not found. It should be on the root directory. Is it there?\n";
+const WATCH_DIR = '/app';
+const ENTRY_POINT_FILE = WATCH_DIR.'/index.php';
+const PHP_BIN = '/usr/local/bin/php';
+const RESTART_CMD = '@restart';
+
+if (!file_exists(ENTRY_POINT_FILE)) {
+    echo "Entry-point file (index.php) not found. It should be on the root directory. Is it there?\n";
     exit(1);
 }
 
@@ -9,55 +14,77 @@ use Swoole\Process;
 use Swoole\Timer;
 use Swoole\Event;
 
-$process = new Process(function (Process $process) {
-    echo "ECHO POINT\n";
-    $process->exec('/usr/local/bin/php', ['/app/index.php']);
-}, true);
+echo "🚀 Start\n";
+start();
 
-echo "Starting process.\n";
-$process->start();
+function start()
+{
+    $watch = new Process('watch', true);
+    $watch->start();
 
-if (false === $process->pid) {
-    echo swoole_strerror(swoole_errno())."\n";
-    exit(1);
+    if (false === $watch->pid) {
+        echo swoole_strerror(swoole_errno());
+        exit(1);
+    }
+
+    Event::add($watch->pipe, function ($pipe) use (&$watch) {
+        $message = $watch->read();
+
+        if (RESTART_CMD === $message) {
+            echo "🔄 Restart\n";
+            start();
+        } else {
+            echo $message;
+        }
+    });
 }
 
-Event::add($process->pipe, function ($pipe) use ($process) {
-    echo $process->read();
-});
+function watch(Process $watch)
+{
+    $serve = new Process('serve', true);
+    $serve->start();
 
-$files = php_files();
-$watch = array_combine($files, array_map('file_hash', $files));
-
-$count = count($watch);
-echo "Watching $count files...\n";
-
-Timer::tick(2000, function () use ($watch, $process) {
-    foreach ($watch as $pathname => $currrent_hash) {
-        $new_hash = file_hash($pathname);
-
-        if ($new_hash != $currrent_hash) {
-            echo "Change detected ($pathname). Restarting process...\n";
-            $process->exit();
-
-            $watch[$pathname] = $new_hash;
-
-            $pid = $process->start();
-            echo "::: 🚀 :::\n";
-
-            continue;
-        }
+    if (false === $serve->pid) {
+        echo swoole_strerror(swoole_errno());
+        exit(1);
     }
-});
+
+    Event::add($serve->pipe, function ($pipe) use (&$serve) {
+        echo $serve->read();
+    });
+
+    $files = php_files(WATCH_DIR);
+    $hashes = array_combine($files, array_map('file_hash', $files));
+    $count = count($hashes);
+
+    echo "📡 Watching $count file(s)...\n";
+
+    Timer::tick(2000, function () use (&$hashes, &$watch, &$serve) {
+        foreach ($hashes as $pathname => $current_hash) {
+            $new_hash = file_hash($pathname);
+
+            if ($new_hash != $current_hash) {
+                Process::kill($serve->pid);
+                echo RESTART_CMD;
+                $watch->exit();
+            }
+        }
+    });
+}
+
+function serve(Process $serve)
+{
+    $serve->exec(PHP_BIN, [ENTRY_POINT_FILE]);
+}
 
 function file_hash(string $pathname): string
 {
     return md5(file_get_contents($pathname));
 }
 
-function php_files(): array
+function php_files(string $dirname): array
 {
-    $directory = new RecursiveDirectoryIterator('/app');
+    $directory = new RecursiveDirectoryIterator($dirname);
     $filter = new Filter($directory);
     $iterator = new RecursiveIteratorIterator($filter);
 
