@@ -9,8 +9,9 @@ RUN apt-get update && apt-get install -y git unzip wget \
 
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
-RUN pecl install swoole \
-  && echo "extension=swoole.so" >> "$PHP_INI_DIR/php.ini"
+RUN pecl install swoole mongodb \
+  && echo "extension=swoole.so" >> "$PHP_INI_DIR/php.ini" \
+  && echo "extension=mongodb.so" >> "$PHP_INI_DIR/php.ini"
 
 WORKDIR /app
 EXPOSE 9501
