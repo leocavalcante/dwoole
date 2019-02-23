@@ -1,15 +1,10 @@
 <?php declare(strict_types=1);
+require_once __DIR__.'/vendor/autoload.php';
 
-use Swoole\Http\Server;
+use Siler\Swoole;
 
-$server = new Server('0.0.0.0', 9501);
+$server = function ($request, $response) {
+    Swoole\emit('server closure');
+};
 
-$server->on('start', function () {
-    echo "Swoole HTTP server is started at 0.0.0.0:9501\n";
-});
-
-$server->on('request', function ($request, $response) {
-    $response->end('It works');
-});
-
-$server->start();
+Swoole\http($server)->start();

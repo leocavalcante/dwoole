@@ -2,8 +2,15 @@
     "name": "leocavalcante/dwoole-example",
     "description": "An example on how to use Dwoole",
     "type": "project",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../siler",
+            "symlink": true
+        }
+    ],
     "require": {
-        "leocavalcante/siler": "^1.4"
+        "leocavalcante/siler": "dev-master"
     },
     "license": "MIT",
     "authors": [
@@ -12,5 +19,5 @@
             "email": "lc@leocavalcante.com"
         }
     ],
-    "minimum-stability": "stable"
+    "minimum-stability": "dev"
 }

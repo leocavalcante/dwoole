@@ -4,21 +4,16 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "26cedc50dcf3e66cf8c1902a1d244fa7",
+    "content-hash": "82d7ff846c503ca4a59692bbdc257fa0",
     "packages": [
         {
             "name": "leocavalcante/siler",
-            "version": "v1.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/leocavalcante/siler.git",
-                "reference": "62004a37d489e61e9afefa45774da5da247f437b"
-            },
+            "version": "dev-master",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/leocavalcante/siler/zipball/62004a37d489e61e9afefa45774da5da247f437b",
-                "reference": "62004a37d489e61e9afefa45774da5da247f437b",
-                "shasum": ""
+                "type": "path",
+                "url": "../../siler",
+                "reference": "2c265ad6cc8918d32eda3540ede12fd90c7da420",
+                "shasum": null
             },
             "require": {
                 "ext-json": "*",
@@ -79,7 +74,27 @@
                     "src/Siler.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Siler\\Test\\": "tests/"
+                }
+            },
+            "scripts": {
+                "lint": [
+                    "phpcs"
+                ],
+                "phan": [
+                    "phan"
+                ],
+                "unit": [
+                    "phpunit"
+                ],
+                "test": [
+                    "@composer lint",
+                    "@composer phan",
+                    "@composer unit"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -96,14 +111,15 @@
                 "functional",
                 "micro",
                 "router"
-            ],
-            "time": "2019-02-19T21:13:18+00:00"
+            ]
         }
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "leocavalcante/siler": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
