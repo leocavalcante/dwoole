@@ -4,7 +4,7 @@ const WATCH_DIR = '/app';
 const PHP_BIN = '/usr/local/bin/php';
 const RESTART_CMD = '@restart';
 
-define('ENTRY_POINT_FILE', getenv('ENTRY_POINT_FILE') ?? '/app/index.php');
+define('ENTRY_POINT_FILE', $_ENV['ENTRY_POINT_FILE'] ?? '/app/index.php');
 
 if (!file_exists(ENTRY_POINT_FILE)) {
     echo "Entry-point file (index.php) not found. It should be on the root directory. Is it there?\n";
