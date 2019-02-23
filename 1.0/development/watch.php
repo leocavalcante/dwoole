@@ -1,9 +1,10 @@
 <?php declare(strict_types=1);
 
 const WATCH_DIR = '/app';
-const ENTRY_POINT_FILE = WATCH_DIR.'/index.php';
 const PHP_BIN = '/usr/local/bin/php';
 const RESTART_CMD = '@restart';
+
+define('ENTRY_POINT_FILE', getenv('ENTRY_POINT_FILE') ?? '/app/index.php');
 
 if (!file_exists(ENTRY_POINT_FILE)) {
     echo "Entry-point file (index.php) not found. It should be on the root directory. Is it there?\n";
@@ -79,7 +80,14 @@ function serve(Process $serve)
 
 function file_hash(string $pathname): string
 {
-    return md5(file_get_contents($pathname));
+    $contents = file_get_contents($pathname);
+
+    // File may be deleted on the fly
+    if (false === $contents) {
+        return 'deleted';
+    }
+
+    return md5($contents);
 }
 
 function php_files(string $dirname): array
