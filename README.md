@@ -12,7 +12,8 @@ Entry-point file can be overridden with the environment variable `ENTRY_POINT_FI
 ### Development
 Comes bundled with:
 - Hot-restart
-- MongoDB extension
+- PDO (MySQL)
+- MongoDB
 
 ### Production
 Comes bundled with:

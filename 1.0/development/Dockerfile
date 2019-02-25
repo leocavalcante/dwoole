@@ -5,6 +5,7 @@ ADD get-composer.sh /usr/local/bin
 ADD watch.php /usr/local/bin
 
 RUN apt-get update && apt-get install -y git unzip wget \
+  && docker-php-ext-install -j$(nproc) pdo_mysql \
   && rm -rf /var/lib/apt/lists/*
 
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
