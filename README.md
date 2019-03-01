@@ -7,15 +7,45 @@
 - `composer.json`
 - `index.php` (this will be your entry-point)
 
-Entry-point file can be overridden with the environment variable `ENTRY_POINT_FILE`. See [docker-compose.yml](https://github.com/leocavalcante/siler/blob/master/examples/swoole-chat/docker-compose.yml) for an example.
+Entry-point file can be overridden with the environment variable `ENTRY_POINT_FILE`. See [this](https://github.com/leocavalcante/siler/blob/master/examples/swoole-chat/docker-compose.yml) for an example.
+
+#### Exposed port is 9501
+
+#### Using Docker Compose?
+
+A `docker-compose.yml` file would look like:
+
+```yaml
+version: "3"
+services:
+  web:
+    container_name: my_app
+    image: leocavalcante/dwoole:1.0-development
+    volumes:
+      - ./:/app
+    ports:
+      - "9501:9501"
+```
+
+Yeah! Simple like that.
 
 ### Development
+
 Comes bundled with:
 - Hot-restart
 - PDO (MySQL)
 - MongoDB
+- Redis
+
+And all Swoole options enabled:
+* `--enable-openssl`
+* `--enable-sockets`
+* `--enable-http2`
+* `--enable-mysqlnd`
+* `--enable-async-redis`
 
 ### Production
+
 Comes bundled with:
 - *Nothing*
 
@@ -31,5 +61,5 @@ Then you can add whatever extensions you would like.
 #### Adding PECL extensions
 TODO
 
-#### Why not inotfy?
+#### Why not inotify?
 https://github.com/docker/for-win/issues/56

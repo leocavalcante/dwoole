@@ -2,15 +2,8 @@
     "name": "leocavalcante/dwoole-example",
     "description": "An example on how to use Dwoole",
     "type": "project",
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../../siler",
-            "symlink": true
-        }
-    ],
     "require": {
-        "leocavalcante/siler": "dev-master"
+        "leocavalcante/siler": "dev-dev"
     },
     "license": "MIT",
     "authors": [

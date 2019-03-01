@@ -4,7 +4,7 @@ require_once __DIR__.'/vendor/autoload.php';
 use Siler\Swoole;
 
 $server = function ($request, $response) {
-    Swoole\emit('server closure');
+    Swoole\emit('Hello World');
 };
 
 Swoole\http($server)->start();
