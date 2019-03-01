@@ -30,3 +30,6 @@ Then you can add whatever extensions you would like.
 
 #### Adding PECL extensions
 TODO
+
+#### Why not inotfy?
+https://github.com/docker/for-win/issues/56
