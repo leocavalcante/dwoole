@@ -25,7 +25,8 @@ RUN docker-php-ext-install -j$(nproc) \
   mbstring  \
   opcache \
   pdo_mysql \
-  sockets
+  sockets && \
+  echo "opcache.enable_cli=1" >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 
 RUN pecl install mongodb \
   && docker-php-ext-enable mongodb
