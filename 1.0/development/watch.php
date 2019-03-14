@@ -68,6 +68,11 @@ function watch(Process $watch)
 
     Timer::tick(2000, function () use (&$hashes, &$watch, &$serve) {
         foreach ($hashes as $pathname => $current_hash) {
+            if (!file_exists($pathname)) {
+                unset($hashes[$pathname]);
+                continue;
+            }
+
             $new_hash = file_hash($pathname);
 
             if ($new_hash != $current_hash) {
