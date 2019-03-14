@@ -7,7 +7,7 @@ const RESTART_CMD = '@restart';
 define('ENTRY_POINT_FILE', $_ENV['ENTRY_POINT_FILE'] ?? '/app/index.php');
 
 if (!file_exists(ENTRY_POINT_FILE)) {
-    echo "Entry-point file (index.php) not found. It should be on the root directory. Is it there?\n";
+    echo "Entry-point file (".ENTRY_POINT_FILE.") not found. It should be on the root directory. Is it there?\n";
     exit(1);
 }
 
@@ -15,16 +15,17 @@ use Swoole\Process;
 use Swoole\Timer;
 use Swoole\Event;
 
-echo "🚀 Start\n";
 start();
 
 function start()
 {
+    echo "🚀 Start\n";
+
     $watch = new Process('watch', true);
     $watch->start();
 
     if (false === $watch->pid) {
-        echo swoole_strerror(swoole_errno());
+        echo swoole_strerror(swoole_errno())."\n";
         exit(1);
     }
 
@@ -35,7 +36,9 @@ function start()
             echo "🔄 Restart\n";
             start();
         } else {
-            echo $message;
+            if (!empty($message)) {
+                echo $message."\n";
+            }
         }
     });
 }
@@ -46,12 +49,16 @@ function watch(Process $watch)
     $serve->start();
 
     if (false === $serve->pid) {
-        echo swoole_strerror(swoole_errno());
+        echo swoole_strerror(swoole_errno())."\n";
         exit(1);
     }
 
     Event::add($serve->pipe, function ($pipe) use (&$serve) {
-        echo $serve->read();
+        $message = $serve->read();
+
+        if (!empty($message)) {
+            echo $message."\n";
+        }
     });
 
     $files = php_files(WATCH_DIR);
