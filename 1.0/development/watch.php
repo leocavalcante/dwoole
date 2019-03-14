@@ -15,12 +15,11 @@ use Swoole\Process;
 use Swoole\Timer;
 use Swoole\Event;
 
+echo "🚀 Start\n";
 start();
 
 function start()
 {
-    echo "🚀 Start\n";
-
     $watch = new Process('watch', true);
     $watch->start();
 
@@ -57,7 +56,7 @@ function watch(Process $watch)
         $message = $serve->read();
 
         if (!empty($message)) {
-            echo $message."\n";
+            echo $message;
         }
     });
 
@@ -65,7 +64,7 @@ function watch(Process $watch)
     $hashes = array_combine($files, array_map('file_hash', $files));
     $count = count($hashes);
 
-    echo "📡 Watching $count file(s)...\n";
+    echo "📡 Watching $count file(s)...";
 
     Timer::tick(2000, function () use (&$hashes, &$watch, &$serve) {
         foreach ($hashes as $pathname => $current_hash) {
