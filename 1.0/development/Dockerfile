@@ -7,19 +7,26 @@ ADD watch.php /usr/local/bin
 RUN apt-get update && apt-get install -y \
   curl \
   git \
+  libfreetype6-dev \
   libhiredis-dev \
+  libjpeg62-turbo-dev \
   libnghttp2-dev \
   libpcre3 \
   libpcre3-dev \
+  libpng-dev \
   libssh-dev \
   openssl \
+  procps \
   unzip \
   vim \
   wget \
   zip \
   && apt autoremove && apt clean
 
-RUN docker-php-ext-install -j$(nproc) \
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
+  docker-php-ext-install -j$(nproc) \
+  exif \
+  gd \
   iconv \
   json \
   mbstring  \
@@ -38,12 +45,12 @@ RUN git clone https://github.com/swoole/swoole-src.git \
   && cd swoole-src \
   && phpize \
   && ./configure \
-  --enable-coroutine \
-  --enable-openssl \
-  --enable-http2 \
   --enable-async-redis \
-  --enable-sockets \
+  --enable-coroutine \
+  --enable-http2 \
   --enable-mysqlnd \
+  --enable-openssl \
+  --enable-sockets \
   && make && make install \
   && docker-php-ext-enable swoole
 
