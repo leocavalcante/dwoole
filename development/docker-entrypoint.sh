@@ -1,6 +1,7 @@
 #!/bin/sh
 set -e
 
-sh /usr/local/bin/get-composer.sh
-php composer install
+composer install
+
+echo "Watch"
 php /usr/local/bin/watch.php

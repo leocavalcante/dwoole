@@ -6,4 +6,4 @@ services:
     volumes:
       - ./:/app
     ports:
-      - "8000:9501"
+      - "8080:9501"

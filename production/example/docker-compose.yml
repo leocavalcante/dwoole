@@ -3,4 +3,4 @@ services:
   production:
     container_name: dwoole_production_example
     build: .
-    ports: ["80:9501"]
+    ports: ["8000:9501"]

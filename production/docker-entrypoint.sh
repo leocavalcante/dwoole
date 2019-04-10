@@ -1,9 +1,9 @@
 #!/bin/sh
 set -e
 
-sh /usr/local/bin/get-composer.sh
-php composer install
+composer install --prefer-dist --no-dev --optimize-autoloader
 
+echo "Start"
 if [ -z "$ENTRY_POINT_FILE" ]
 then
   php /app/index.php
