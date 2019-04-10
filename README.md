@@ -42,7 +42,7 @@ All Swoole options enabled:
 
 Comes bundled with:
 - Hot-restart
-- PDO (MySQL)
+- PDO MySQL & MySQLi
 - MongoDB
 - Redis
 
@@ -62,6 +62,17 @@ COPY . /app
 
 Then you can add whatever extensions you would like.
 
+##### Adding PHP extensions
+
+```Dockerfile
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
+  docker-php-ext-install -j$(nproc) \
+  exif \
+  gd \
+  mysqli \
+  pdo_mysql
+```
+
 ##### Adding PECL extensions
 
 ```Dockerfile
@@ -72,7 +83,9 @@ RUN pecl install mongodb \
 ```Dockerfile
 RUN pecl install redis \
   && docker-php-ext-enable redis
-  ```
+```
+
+###### [You can always take a look at the development Dockerfile to see how it installs extensions that you mihgt have used.](https://github.com/leocavalcante/dwoole/blob/master/development/Dockerfile)
 
 #### Why not inotify?
 
