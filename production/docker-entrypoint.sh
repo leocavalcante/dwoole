@@ -2,7 +2,7 @@
 set -e
 
 sh /usr/local/bin/get-composer.sh
-php composer.phar install
+php composer install
 
 if [ -z "$ENTRY_POINT_FILE" ]
 then
