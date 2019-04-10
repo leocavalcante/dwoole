@@ -1,0 +1,16 @@
+{
+  "name": "dwoole/production-example",
+  "description": "An example on how to use Dwoole",
+  "type": "project",
+  "require": {
+    "leocavalcante/siler": "^1.5"
+  },
+  "license": "MIT",
+  "authors": [
+  {
+    "name": "leocavalcante",
+    "email": "lc@leocavalcante.com"
+  }
+  ],
+  "minimum-stability": "stable"
+}

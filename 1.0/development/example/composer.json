@@ -1,9 +1,9 @@
 {
-    "name": "leocavalcante/dwoole-example",
+    "name": "dwoole/development-example",
     "description": "An example on how to use Dwoole",
     "type": "project",
     "require": {
-        "leocavalcante/siler": "dev-dev"
+        "leocavalcante/siler": "^1.5"
     },
     "license": "MIT",
     "authors": [
@@ -12,5 +12,5 @@
             "email": "lc@leocavalcante.com"
         }
     ],
-    "minimum-stability": "dev"
+    "minimum-stability": "stable"
 }
