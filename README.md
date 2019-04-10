@@ -29,7 +29,16 @@ services:
 
 Yeah! Simple like that.
 
-### Development
+### What is inside?
+
+All Swoole options enabled:
+* `--enable-openssl`
+* `--enable-sockets`
+* `--enable-http2`
+* `--enable-mysqlnd`
+* `--enable-async-redis`
+
+#### Development
 
 Comes bundled with:
 - Hot-restart
@@ -37,14 +46,8 @@ Comes bundled with:
 - MongoDB
 - Redis
 
-And all Swoole options enabled:
-* `--enable-openssl`
-* `--enable-sockets`
-* `--enable-http2`
-* `--enable-mysqlnd`
-* `--enable-async-redis`
 
-### Production
+#### Production
 
 Comes bundled with:
 - *Nothing*
@@ -54,12 +57,23 @@ The recommended way to use the production variant is as a base image for you pro
 
 ```Dockerfile
 FROM leocavalcante/dwoole:<version>-production
+COPY . /app
 ```
 
 Then you can add whatever extensions you would like.
 
-#### Adding PECL extensions
-TODO
+##### Adding PECL extensions
+
+```Dockerfile
+RUN pecl install mongodb \
+  && docker-php-ext-enable mongodb
+```
+
+```Dockerfile
+RUN pecl install redis \
+  && docker-php-ext-enable redis
+  ```
 
 #### Why not inotify?
+
 https://github.com/docker/for-win/issues/56
