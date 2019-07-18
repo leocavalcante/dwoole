@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y \
   libfreetype6-dev \
   libjpeg62-turbo-dev \
   libpng-dev \
+  libzip-dev \
   && apt autoremove && apt clean
 
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
@@ -14,7 +15,8 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
   exif \
   gd \
   mysqli \
-  pdo_mysql
+  pdo_mysql \
+  zip
 
 RUN pecl install mongodb \
   && docker-php-ext-enable mongodb
