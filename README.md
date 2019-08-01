@@ -85,7 +85,7 @@ RUN pecl install redis \
   && docker-php-ext-enable redis
 ```
 
-###### [You can always take a look at the development Dockerfile to see how it installs extensions that you mihgt have used.](https://github.com/leocavalcante/dwoole/blob/master/development/Dockerfile)
+###### [You can always take a look at the development Dockerfile to see how it installs extensions that you might have used.](https://github.com/leocavalcante/dwoole/blob/master/development/Dockerfile)
 
 #### Why not inotify?
 
