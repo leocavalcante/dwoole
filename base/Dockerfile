@@ -28,14 +28,13 @@ RUN curl -sS https://getcomposer.org/installer | php \
 
 RUN git clone https://github.com/swoole/swoole-src.git \
   && cd swoole-src \
+  && git checkout v4.x.x \
   && phpize \
   && ./configure \
-  --enable-async-redis \
-  --enable-coroutine \
-  --enable-http2 \
-  --enable-mysqlnd \
   --enable-openssl \
   --enable-sockets \
+  --enable-http2 \
+  --enable-mysqlnd \
   && make && make install \
   && docker-php-ext-enable swoole \
   && rm -rf /tmp/*
