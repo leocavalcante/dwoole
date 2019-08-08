@@ -31,12 +31,11 @@ Yeah! Simple like that.
 
 ### What is inside?
 
-All Swoole options enabled:
+Options enabled:
 * `--enable-openssl`
 * `--enable-sockets`
 * `--enable-http2`
 * `--enable-mysqlnd`
-* `--enable-async-redis`
 
 #### Development
 
