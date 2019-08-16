@@ -3,7 +3,6 @@ FROM php:7.3-cli-stretch
 RUN apt-get update && apt-get install -y \
   curl \
   git \
-  libnghttp2-dev \
   libpcre3 \
   libpcre3-dev \
   libssh-dev \
