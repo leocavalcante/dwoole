@@ -1,10 +1,18 @@
 <?php declare(strict_types=1);
 
-const WATCH_DIR = '/app';
-const PHP_BIN = '/usr/local/bin/php';
 const RESTART_CMD = '@restart';
 
-define('ENTRY_POINT_FILE', $_ENV['ENTRY_POINT_FILE'] ?? '/app/index.php');
+$env_vars = [
+    'PHP_BIN' => '/usr/local/bin/php',
+    'WATCH_DIR' => '/app',
+    'ENTRY_POINT_FILE' => '/app/index.php',
+    'WATCH_LIST' => 'php,phtml,twig,env'
+];
+
+foreach ($env_vars as $var => $default) {
+    $val = getenv($var);
+    define($var, $val === false ? $default : $val);
+}
 
 if (!file_exists(ENTRY_POINT_FILE)) {
     echo "Entry-point file (".ENTRY_POINT_FILE.") not found. It should be on the root directory. Is it there?\n";
@@ -15,35 +23,21 @@ use Swoole\Process;
 use Swoole\Timer;
 use Swoole\Event;
 
-echo "🚀 Start\n";
+swoole_async_set(['enable_coroutine' => false]);
+
+$hashes = [];
+$serve = null;
+
 start();
+state();
+Timer::tick(2000, 'watch');
 
 function start()
 {
-    $watch = new Process('watch', true);
-    $watch->start();
+    global $serve;
 
-    if (false === $watch->pid) {
-        echo swoole_strerror(swoole_errno())."\n";
-        exit(1);
-    }
+    echo "🚀 Start\n";
 
-    Event::add($watch->pipe, function ($pipe) use (&$watch) {
-        $message = $watch->read();
-
-        if (RESTART_CMD === $message) {
-            echo "🔄 Restart\n";
-            start();
-        } else {
-            if (!empty($message)) {
-                echo $message."\n";
-            }
-        }
-    });
-}
-
-function watch(Process $watch)
-{
     $serve = new Process('serve', true);
     $serve->start();
 
@@ -59,29 +53,46 @@ function watch(Process $watch)
             echo $message;
         }
     });
+}
+
+function watch()
+{
+    global $hashes;
+
+    foreach ($hashes as $pathname => $current_hash) {
+        if (!file_exists($pathname)) {
+            unset($hashes[$pathname]);
+            continue;
+        }
+
+        $new_hash = file_hash($pathname);
+        if ($new_hash != $current_hash) {
+            change();
+            state();
+            break;
+        }
+    }
+}
+
+function state()
+{
+    global $hashes;
 
     $files = php_files(WATCH_DIR);
     $hashes = array_combine($files, array_map('file_hash', $files));
     $count = count($hashes);
 
-    echo "📡 Watching $count file(s)...";
+    echo "📡 Watching $count files...\n";
+}
 
-    Timer::tick(2000, function () use (&$hashes, &$watch, &$serve) {
-        foreach ($hashes as $pathname => $current_hash) {
-            if (!file_exists($pathname)) {
-                unset($hashes[$pathname]);
-                continue;
-            }
+function change()
+{
+    global $serve;
 
-            $new_hash = file_hash($pathname);
+    echo "🔄 Change detected!\n";
 
-            if ($new_hash != $current_hash) {
-                Process::kill($serve->pid);
-                echo RESTART_CMD;
-                $watch->exit();
-            }
-        }
-    });
+    Process::kill($serve->pid);
+    start();
 }
 
 function serve(Process $serve)
@@ -124,6 +135,12 @@ class Filter extends RecursiveFilterIterator
             return !in_array($this->current()->getFilename(), ['vendor']);
         }
 
-        return preg_match('/\.php$/', $this->current()->getFilename());
+        $list = array_map(function (string $item): string {
+            return "\.$item";
+        }, explode(',', WATCH_LIST));
+
+        $list = implode('|', $list);
+
+        return preg_match("/($list)$/", $this->current()->getFilename());
     }
 }
