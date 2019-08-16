@@ -1,7 +1,5 @@
 FROM leocavalcante/dwoole-base:1.0
 
-ADD docker-entrypoint.sh watch.php /usr/local/bin/
-
 RUN apt-get update && apt-get install -y \
   libfreetype6-dev \
   libjpeg62-turbo-dev \
@@ -23,4 +21,5 @@ RUN pecl install mongodb \
 RUN pecl install redis \
   && docker-php-ext-enable redis
 
+ADD docker-entrypoint.sh watch.php /usr/local/bin/
 ENTRYPOINT [ "sh", "/usr/local/bin/docker-entrypoint.sh" ]

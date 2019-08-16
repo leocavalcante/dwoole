@@ -2,10 +2,12 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use Siler\Swoole;
+use function Siler\Swoole\{http, emit};
 
 $server = function () {
-    Swoole\emit('Hello World!');
+    $message = 'It works';
+    var_dump($message);
+    emit($message);
 };
 
-Swoole\http($server)->start();
+http($server)->start();

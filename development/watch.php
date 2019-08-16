@@ -47,7 +47,7 @@ function start()
     }
 
     Event::add($serve->pipe, function ($pipe) use (&$serve) {
-        $message = $serve->read();
+        $message = @$serve->read();
 
         if (!empty($message)) {
             echo $message;
