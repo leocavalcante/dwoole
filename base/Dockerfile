@@ -21,6 +21,7 @@ RUN docker-php-ext-install -j$(nproc) \
   sockets \
   && echo "opcache.enable_cli=1" >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 
+ENV COMPOSER_ALLOW_SUPERUSER 1
 ADD install_composer.sh /usr/local/bin/install_composer.sh
 RUN ./usr/local/bin/install_composer.sh
 
