@@ -22,7 +22,7 @@ RUN docker-php-ext-install -j$(nproc) \
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ADD install_composer.sh /usr/local/bin/install_composer.sh
-RUN ["sh" "./usr/local/bin/install_composer.sh"]
+RUN ["sh", "./usr/local/bin/install_composer.sh"]
 
 RUN git clone https://github.com/swoole/swoole-src.git \
   && cd swoole-src \
