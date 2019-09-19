@@ -1,4 +1,4 @@
-FROM php:7.3-cli-stretch
+FROM php:7.3
 
 RUN apt-get update && apt-get install -y \
   curl \
@@ -21,8 +21,7 @@ RUN docker-php-ext-install -j$(nproc) \
   && echo "opcache.enable_cli=1" >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
-ADD install_composer.sh /usr/local/bin/install_composer.sh
-RUN ["sh", "./usr/local/bin/install_composer.sh"]
+COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 RUN git clone https://github.com/swoole/swoole-src.git \
   && cd swoole-src \
