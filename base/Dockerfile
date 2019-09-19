@@ -26,7 +26,7 @@ RUN ["sh", "./usr/local/bin/install_composer.sh"]
 
 RUN git clone https://github.com/swoole/swoole-src.git \
   && cd swoole-src \
-  && git checkout v4.4.5 \
+  && git checkout v4.4.6 \
   && phpize \
   && ./configure \
   --enable-openssl \
