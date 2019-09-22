@@ -1,6 +1,8 @@
 FROM leocavalcante/dwoole-base:1.0
 
-RUN apt-get update && apt-get install -y \
+RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
+
+RUN apt update && apt upgrade -y && apt install -y \
   libfreetype6-dev \
   libjpeg62-turbo-dev \
   libpng-dev \
@@ -15,11 +17,12 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
   pdo_mysql \
   zip
 
-RUN pecl install mongodb \
-  && docker-php-ext-enable mongodb
-
-RUN pecl install redis \
-  && docker-php-ext-enable redis
+RUN yes | pecl install igbinary redis mongodb xdebug \
+  && docker-php-ext-enable igbinary redis mongodb xdebug \
+  && echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+  && echo "xdebug.remote_mode=req" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+  && echo "xdebug.remote_port=9000" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+  && echo "xdebug.remote_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 ADD docker-entrypoint.sh watch.php /usr/local/bin/
 ENTRYPOINT [ "sh", "/usr/local/bin/docker-entrypoint.sh" ]

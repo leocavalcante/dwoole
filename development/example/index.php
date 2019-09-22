@@ -4,6 +4,8 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use function Siler\Swoole\{http, emit};
 
+echo 'here';
+
 $server = function () {
     $message = 'It works';
     var_dump($message);

@@ -3,7 +3,7 @@
     "description": "An example on how to use Dwoole",
     "type": "project",
     "require": {
-        "leocavalcante/siler": "^1.6"
+        "leocavalcante/siler": "dev-master"
     },
     "license": "MIT",
     "authors": [

@@ -1,9 +1,11 @@
 # Dwoole
+
 [Docker](https://www.docker.com/) image for [Swoole](https://www.swoole.co.uk/) apps with [Composer](https://getcomposer.org/), auto-restart on development and a production-ready version.
 
 ## Usage
 
 ### Requirements
+
 - `composer.json`
 - `index.php` (this will be your entry-point)
 
@@ -32,24 +34,26 @@ Yeah! Simple like that.
 ### What is inside?
 
 Options enabled:
-* `--enable-openssl`
-* `--enable-sockets`
-* `--enable-http2`
-* `--enable-mysqlnd`
+
+- `--enable-openssl`
+- `--enable-sockets`
+- `--enable-http2`
+- `--enable-mysqlnd`
 
 #### Development
 
 Comes bundled with:
+
 - Hot-restart
 - PDO MySQL & MySQLi
 - MongoDB
 - Redis
 
-
 #### Production
 
 Comes bundled with:
-- *Nothing*
+
+- _Nothing_
 
 It is Swoole only. That is because only you knows what your project really needs.
 The recommended way to use the production variant is as a base image for you project image.
