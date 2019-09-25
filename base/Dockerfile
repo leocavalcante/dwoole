@@ -25,7 +25,7 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 RUN git clone https://github.com/swoole/swoole-src.git \
   && cd swoole-src \
-  && git checkout v4.4.6 \
+  && git checkout v4.4.7 \
   && phpize \
   && ./configure \
   --enable-openssl \
