@@ -60,7 +60,7 @@ The recommended way to use the production variant is as a base image for you pro
 
 ```Dockerfile
 FROM leocavalcante/dwoole:prod
-# Add only what you project really needs
+# Add only what your project really needs
 COPY . /app
 ```
 
