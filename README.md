@@ -22,7 +22,7 @@ version: "3"
 services:
   web:
     container_name: my_app
-    image: leocavalcante/dwoole:1.0-development
+    image: leocavalcante/dwoole:dev
     volumes:
       - ./:/app
     ports:
@@ -59,7 +59,8 @@ It is Swoole only. That is because only you knows what your project really needs
 The recommended way to use the production variant is as a base image for you project image.
 
 ```Dockerfile
-FROM leocavalcante/dwoole:<version>-production
+FROM leocavalcante/dwoole:prod
+# Add only what you project really needs
 COPY . /app
 ```
 
@@ -93,3 +94,5 @@ RUN pecl install redis \
 #### Why not inotify?
 
 https://github.com/docker/for-win/issues/56
+
+⚠ Dwoole will always commit to the latest PHP and Swoole versions
