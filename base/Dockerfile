@@ -14,7 +14,7 @@ RUN apk add --no-cache $PHPIZE_DEPS git openssl-dev \
   && echo "opcache.enable_cli=1" >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
   && git clone https://github.com/swoole/swoole-src.git \
   && cd swoole-src \
-  && git checkout v4.4.7 \
+  && git checkout v4.4.8 \
   && phpize \
   && ./configure \
   --enable-openssl \

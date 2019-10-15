@@ -1,8 +1,7 @@
-docker build --squash -t dwoole:base .\base\
-docker tag dwoole:base leocavalcante/dwoole:base
+$tags = "base", "dev", "prod"
 
-docker build --squash -t dwoole:dev .\dev\
-docker tag dwoole:dev leocavalcante/dwoole:dev
-
-docker build --squash -t dwoole:prod .\prod\
-docker tag dwoole:prod leocavalcante/dwoole:prod
+foreach ($tag in $tags)
+{
+  docker build --squash -t "dwoole:$tag" ".\$tag\"
+  docker tag "dwoole:$tag" "leocavalcante/dwoole:$tag"
+}
