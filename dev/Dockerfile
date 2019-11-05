@@ -1,7 +1,7 @@
 FROM leocavalcante/dwoole:base
 
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" \
-  && apk add --no-cache freetype-dev libjpeg-turbo-dev libpng-dev libzip-dev \
+  && apk add --no-cache freetype-dev libjpeg-turbo-dev libpng-dev libzip-dev zstd-dev postgresql-dev \
   && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
   && docker-php-ext-install -j$(nproc) exif gd mysqli pdo_mysql pdo_pgsql zip \
   && yes | pecl install igbinary redis mongodb xdebug \
