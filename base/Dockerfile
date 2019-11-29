@@ -1,9 +1,9 @@
-FROM php:alpine
+FROM php:7.4-alpine
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
-RUN apk add --no-cache $PHPIZE_DEPS git openssl-dev \
+RUN apk add --no-cache $PHPIZE_DEPS git openssl-dev oniguruma-dev \
   && docker-php-ext-install -j$(nproc) \
     iconv \
     json \
