@@ -12,15 +12,13 @@ RUN apk add --no-cache $PHPIZE_DEPS git openssl-dev oniguruma-dev \
     pcntl \
     sockets \
   && echo "opcache.enable_cli=1" >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
-  && git clone https://github.com/swoole/swoole-src.git \
+  && git clone -b v4.4.12 https://github.com/swoole/swoole-src.git \
   && cd swoole-src \
-  && git checkout v4.4.12 \
   && phpize \
   && ./configure \
-  --enable-openssl \
   --enable-sockets \
+  --enable-openssl \
   --enable-http2 \
-  --enable-mysqlnd \
   && make && make install \
   && docker-php-ext-enable swoole
 
