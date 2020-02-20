@@ -14,15 +14,15 @@ jobs:
 
       - name: Base
         run: |
-          docker build --squash -t leocavalcante/dwoole:base base
+          docker build -t leocavalcante/dwoole:base base
           docker push leocavalcante/dwoole:base
 
       - name: Dev
         run: |
-          docker build --squash -t leocavalcante/dwoole:dev dev
+          docker build -t leocavalcante/dwoole:dev dev
           docker push leocavalcante/dwoole:dev
 
       - name: Prod
         run: |
-          docker build --squash -t leocavalcante/dwoole:prod prod
+          docker build -t leocavalcante/dwoole:prod prod
           docker push leocavalcante/dwoole:prod
