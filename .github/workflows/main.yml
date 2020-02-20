@@ -23,6 +23,6 @@ jobs:
           docker push leocavalcante/dwoole:dev
 
       - name: Prod
-          run: |
-            docker build --squash -t leocavalcante/dwoole:prod prod
-            docker push leocavalcante/dwoole:prod
+        run: |
+          docker build --squash -t leocavalcante/dwoole:prod prod
+          docker push leocavalcante/dwoole:prod
