@@ -93,6 +93,7 @@ RUN pecl install redis \
 
 #### Why not inotify?
 
-https://github.com/docker/for-win/issues/56
+- https://github.com/docker/for-win/issues/56
+- > Linux containers only receive file change events (“inotify events”) if the original files are stored in the Linux filesystem. - https://docs.docker.com/docker-for-windows/wsl/
 
-⚠ Dwoole will always commit to the latest PHP and Swoole versions
+⚠ Dwoole will always commit to the latest PHP and Swoole versions.
