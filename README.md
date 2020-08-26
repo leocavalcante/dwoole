@@ -44,6 +44,7 @@ Options enabled:
 
 Comes bundled with:
 
+- [sdebug](https://github.com/swoole/sdebug)
 - Hot-restart
 - PDO MySQL & MySQLi
 - MongoDB
