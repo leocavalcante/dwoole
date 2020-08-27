@@ -50,6 +50,8 @@ Comes bundled with:
 - MongoDB
 - Redis
 
+Watch interval can be overridden with the environment variable `WATCH_INTERVAL`.
+
 #### Production
 
 Comes bundled with:

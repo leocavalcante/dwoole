@@ -1,102 +1,128 @@
 {
-  "_readme": [
-    "This file locks the dependencies of your project to a known state",
-    "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
-    "This file is @generated automatically"
-  ],
-  "content-hash": "ceed09a20c296e2055640cb2550c29af",
-  "packages": [
-    {
-      "name": "leocavalcante/siler",
-      "version": "v1.5.3",
-      "source": {
-        "type": "git",
-        "url": "https://github.com/leocavalcante/siler.git",
-        "reference": "4868cb0629de6df32b7eb7beeb7377467de0cffc"
-      },
-      "dist": {
-        "type": "zip",
-        "url": "https://api.github.com/repos/leocavalcante/siler/zipball/4868cb0629de6df32b7eb7beeb7377467de0cffc",
-        "reference": "4868cb0629de6df32b7eb7beeb7377467de0cffc",
-        "shasum": ""
-      },
-      "require": {
-        "ext-json": "^1.2",
-        "php": ">=7.2"
-      },
-      "require-dev": {
-        "cboden/ratchet": "^0.4",
-        "cocur/slugify": "^3.2",
-        "eaglewu/swoole-ide-helper": "dev-master",
-        "ext-mongodb": "^1.5",
-        "gabordemooij/redbean": "^5.2",
-        "mongodb/mongodb": "^1.4",
-        "monolog/monolog": "^1.24",
-        "phan/phan": "^1.2",
-        "phpunit/phpunit": "^8.0",
-        "ratchet/pawl": "^0.3",
-        "squizlabs/php_codesniffer": "^3.4",
-        "swiftmailer/swiftmailer": "^6.2",
-        "twig/twig": "^2.7",
-        "vlucas/phpdotenv": "^3.3",
-        "webonyx/graphql-php": "^0.13",
-        "zendframework/zend-diactoros": "^2.1",
-        "zendframework/zend-httphandlerrunner": "^1.1",
-        "zendframework/zend-stratigility": "^3.1"
-      },
-      "suggest": {
-        "vlucas/phpdotenv": "Storing configuration in the environment is one of the tenets of a twelve-factor app."
-      },
-      "type": "library",
-      "autoload": {
-        "psr-4": {
-          "Siler\\": "src/"
-        },
-        "files": [
-          "src/Container/Container.php",
-          "src/Db/Db.php",
-          "src/Db/Mongo.php",
-          "src/Db/Redis.php",
-          "src/Diactoros/Diactoros.php",
-          "src/Dotenv/Dotenv.php",
-          "src/Functional/Functional.php",
-          "src/Functional/Monad/Monad.php",
-          "src/GraphQL/GraphQL.php",
-          "src/Http/Http.php",
-          "src/Http/Request.php",
-          "src/Http/Response.php",
-          "src/HttpHandlerRunner/HttpHandlerRunner.php",
-          "src/Mail/SwiftMailer.php",
-          "src/Monolog/Monolog.php",
-          "src/Prelude/Str.php",
-          "src/Prelude/Tuple.php",
-          "src/Result/Result.php",
-          "src/Route/Route.php",
-          "src/Stratigility/Stratigility.php",
-          "src/Swoole/Swoole.php",
-          "src/Twig/Twig.php",
-          "src/Siler.php"
-        ]
-      },
-      "notification-url": "https://packagist.org/downloads/",
-      "license": ["MIT"],
-      "authors": [
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "d73dfdf295c658b9d43ae50073990517",
+    "packages": [
         {
-          "name": "leocavalcante",
-          "email": "lc@leocavalcante.com"
+            "name": "leocavalcante/siler",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/leocavalcante/siler.git",
+                "reference": "6292e1d1d92b169325550c4db0759bca169c65ce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/leocavalcante/siler/zipball/6292e1d1d92b169325550c4db0759bca169c65ce",
+                "reference": "6292e1d1d92b169325550c4db0759bca169c65ce",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3"
+            },
+            "require-dev": {
+                "cboden/ratchet": "^0.4.1",
+                "cocur/slugify": "^4.0",
+                "doctrine/annotations": "^1.10",
+                "doctrine/cache": "^1.10",
+                "gabordemooij/redbean": "^5.5",
+                "google/protobuf": "^3.12",
+                "grpc/grpc": "^1.30",
+                "laminas/laminas-diactoros": "^2.2",
+                "laminas/laminas-httphandlerrunner": "^1.1",
+                "laminas/laminas-stratigility": "^3.2",
+                "monolog/monolog": "^2.1",
+                "phpunit/phpunit": "^9.2",
+                "psr/event-dispatcher": "^1.0",
+                "squizlabs/php_codesniffer": "^3.5",
+                "swiftmailer/swiftmailer": "^6.2",
+                "swoole/ide-helper": "^4.5",
+                "textalk/websocket": "^1.2",
+                "twig/twig": "^3.0",
+                "vimeo/psalm": "^3.12",
+                "vlucas/phpdotenv": "^5.0",
+                "webonyx/graphql-php": "^14.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Siler\\": "src/"
+                },
+                "files": [
+                    "src/Container/Container.php",
+                    "src/Diactoros/Diactoros.php",
+                    "src/Dotenv/Dotenv.php",
+                    "src/Encoder/Json.php",
+                    "src/Env/Env.php",
+                    "src/File/File.php",
+                    "src/Functional/Functional.php",
+                    "src/Functional/Monad/Monad.php",
+                    "src/GraphQL/GraphQL.php",
+                    "src/GraphQL/GraphiQL.php",
+                    "src/Grpc/Grpc.php",
+                    "src/Http/Http.php",
+                    "src/Http/Request.php",
+                    "src/Http/Response.php",
+                    "src/HttpHandlerRunner/HttpHandlerRunner.php",
+                    "src/Mail/SwiftMailer.php",
+                    "src/Monolog/Monolog.php",
+                    "src/Prelude/Arr.php",
+                    "src/Prelude/IO.php",
+                    "src/Prelude/Klass.php",
+                    "src/Prelude/Obj.php",
+                    "src/Prelude/Str.php",
+                    "src/Prelude/Tuple.php",
+                    "src/Ratchet/Ratchet.php",
+                    "src/Result/Result.php",
+                    "src/Route/Route.php",
+                    "src/Stratigility/Stratigility.php",
+                    "src/Swoole/Swoole.php",
+                    "src/Twig/Twig.php",
+                    "src/Siler.php",
+                    "src/facades.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "leocavalcante",
+                    "email": "lc@leocavalcante.com"
+                }
+            ],
+            "description": "Siler is a set of general purpose high-level abstractions aiming an API for declarative programming in PHP.",
+            "keywords": [
+                "api",
+                "framework",
+                "functional",
+                "graphql",
+                "micro",
+                "router",
+                "swoole"
+            ],
+            "funding": [
+                {
+                    "url": "https://github.com/leocavalcante",
+                    "type": "github"
+                }
+            ],
+            "time": "2020-08-26T01:44:49+00:00"
         }
-      ],
-      "description": "Siler is a set of general purpose high-level abstractions aiming an API for declarative programming in PHP.",
-      "keywords": ["api", "framework", "functional", "micro", "router", "swoole"],
-      "time": "2019-04-01T04:54:16+00:00"
-    }
-  ],
-  "packages-dev": [],
-  "aliases": [],
-  "minimum-stability": "stable",
-  "stability-flags": [],
-  "prefer-stable": false,
-  "prefer-lowest": false,
-  "platform": [],
-  "platform-dev": []
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "leocavalcante/siler": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }

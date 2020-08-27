@@ -5,8 +5,9 @@ use function Siler\Swoole\{http, emit};
 $dir = __DIR__;
 require_once "$dir/vendor/autoload.php";
 
-$handler = function () {
-    emit('Hello World');
+$handler = static function () {
+    var_dump('Hello, World!');
+    emit('Hello, Word!'); ////
 };
 
 http($handler)->start();

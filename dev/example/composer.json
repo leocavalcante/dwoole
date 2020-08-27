@@ -3,7 +3,7 @@
     "description": "An example on how to use Dwoole dev tag",
     "type": "project",
     "require": {
-        "leocavalcante/siler": "dev-master"
+        "leocavalcante/siler": "dev-main"
     },
     "license": "MIT",
     "authors": [

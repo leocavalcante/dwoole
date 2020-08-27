@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-const RESTART_CMD = '@restart';
-
 $env_vars = [
     'PHP_BIN' => '/usr/local/bin/php',
     'WATCH_DIR' => '/app',
     'ENTRY_POINT_FILE' => '/app/index.php',
-    'WATCH_LIST' => 'php,phtml,twig,env'
+    'WATCH_LIST' => 'php,phtml,twig',
+    'DEBUG' => false,
+    'WATCH_INTERVAL' => 2000,
 ];
 
 foreach ($env_vars as $var => $default) {
@@ -15,44 +15,39 @@ foreach ($env_vars as $var => $default) {
 }
 
 if (!file_exists(ENTRY_POINT_FILE)) {
-    echo "Entry-point file (".ENTRY_POINT_FILE.") not found. It should be on the root directory. Is it there?\n";
+    echo "Entry-point file (" . ENTRY_POINT_FILE . ") not found. It should be on the root directory. Is it there?\n";
     exit(1);
 }
 
 use Swoole\Process;
-use Swoole\Timer;
-use Swoole\Event;
-
-swoole_async_set(['enable_coroutine' => false]);
 
 $hashes = [];
+/** @var Process|null $serve */
 $serve = null;
 
-start();
 state();
-Timer::tick(2000, 'watch');
+start();
+watch();
 
 function start()
 {
     global $serve;
 
-    echo "🚀 Start\n";
-
-    $serve = new Process('serve', true);
+    $serve = new Process('serve');
     $serve->start();
 
-    if (false === $serve->pid) {
-        echo swoole_strerror(swoole_errno())."\n";
-        exit(1);
-    }
+    echo "🚀 Ready\n";
+}
 
-    Event::add($serve->pipe, function ($pipe) use (&$serve) {
-        $message = @$serve->read();
+function state()
+{
+    global $hashes;
 
-        if (!empty($message)) {
-            echo $message;
-        }
-    });
+    $files = php_files(WATCH_DIR);
+    $hashes = array_combine($files, array_map('file_hash', $files));
+    $count = count($hashes);
+
+    echo "📡 Watching $count files (interval " . WATCH_INTERVAL . "ms)\n";
 }
 
 function watch()
@@ -68,31 +63,26 @@ function watch()
         $new_hash = file_hash($pathname);
         if ($new_hash != $current_hash) {
             change();
-            state();
             break;
         }
     }
-}
 
-function state()
-{
-    global $hashes;
-
-    $files = php_files(WATCH_DIR);
-    $hashes = array_combine($files, array_map('file_hash', $files));
-    $count = count($hashes);
-
-    echo "📡 Watching $count files...\n";
+    usleep((int)WATCH_INTERVAL * 1000);
+    watch();
 }
 
 function change()
 {
     global $serve;
 
-    echo "🔄 Change detected!\n";
+    echo "🔄 Change detected\n";
 
     Process::kill($serve->pid);
+    Process::wait();
+
+    state();
     start();
+    watch();
 }
 
 function serve(Process $serve)
