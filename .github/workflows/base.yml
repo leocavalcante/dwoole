@@ -1,0 +1,33 @@
+name: Build & push
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "base/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - uses: Azure/docker-login@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Base
+        run: |
+          docker build -t leocavalcante/dwoole:base base
+          docker push leocavalcante/dwoole:base
+
+      - name: Dev
+        run: |
+          docker build -t leocavalcante/dwoole:dev dev
+          docker push leocavalcante/dwoole:dev
+
+      - name: Prod
+        run: |
+          docker build -t leocavalcante/dwoole:prod prod
+          docker push leocavalcante/dwoole:prod

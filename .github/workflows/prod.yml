@@ -1,5 +1,10 @@
 name: Build & push
-on: [push]
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "prod/**"
 
 jobs:
   build:
@@ -11,16 +16,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Base
-        run: |
-          docker build -t leocavalcante/dwoole:base base
-          docker push leocavalcante/dwoole:base
-
-      - name: Dev
-        run: |
-          docker build -t leocavalcante/dwoole:dev dev
-          docker push leocavalcante/dwoole:dev
 
       - name: Prod
         run: |
