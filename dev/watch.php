@@ -1,39 +1,37 @@
 <?php declare(strict_types=1);
 
-$env_vars = [
-    'PHP_BIN' => '/usr/local/bin/php',
-    'WATCH_DIR' => '/app',
-    'ENTRY_POINT_FILE' => '/app/index.php',
-    'WATCH_LIST' => 'php,phtml,twig',
-    'DEBUG' => false,
-    'WATCH_INTERVAL' => 2000,
-];
+use Swoole\Process;
 
-foreach ($env_vars as $var => $default) {
-    $val = getenv($var);
-    define($var, $val === false ? $default : $val);
-}
+define('PHP_BIN', getenv('PHP_BIN') ?: '/usr/local/bin/php');
+define('WATCH_DIR', getenv('WATCH_DIR') ?: '/app');
+define('ENTRY_POINT_FILE', getenv('ENTRY_POINT_FILE') ?: '/app/index.php');
+define('WATCH_LIST', getenv('WATCH_LIST') ?: 'php,phtml,twig');
+define('DEBUG', getenv('DEBUG') ?: false);
+define('WATCH_INTERVAL', getenv('WATCH_INTERVAL') ?: 2000);
 
 if (!file_exists(ENTRY_POINT_FILE)) {
     echo "Entry-point file (" . ENTRY_POINT_FILE . ") not found. It should be on the root directory. Is it there?\n";
     exit(1);
 }
 
-use Swoole\Process;
-
 $hashes = [];
 /** @var Process|null $serve */
 $serve = null;
+$changes_counter = 0;
 
 state();
 start();
-watch();
+
+while (true) {
+    watch();
+    usleep((int)WATCH_INTERVAL * 1000);
+}
 
 function start()
 {
     global $serve;
 
-    $serve = new Process('serve');
+    $serve = new Process('serve', false, 0, false);
     $serve->start();
 
     echo "🚀 Ready\n";
@@ -61,28 +59,25 @@ function watch()
         }
 
         $new_hash = file_hash($pathname);
-        if ($new_hash != $current_hash) {
+        if ($new_hash !== $current_hash) {
             change();
             break;
         }
     }
-
-    usleep((int)WATCH_INTERVAL * 1000);
-    watch();
 }
 
 function change()
 {
-    global $serve;
+    global $serve, $changes_counter;
 
-    echo "🔄 Change detected\n";
+    $changes_counter++;
+    echo "🔄 Changes detected ($changes_counter)\n";
 
     Process::kill($serve->pid);
     Process::wait();
 
     state();
     start();
-    watch();
 }
 
 function serve(Process $serve)

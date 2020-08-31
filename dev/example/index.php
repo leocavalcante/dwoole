@@ -7,7 +7,8 @@ require_once "$dir/vendor/autoload.php";
 
 $handler = static function () {
     var_dump('Hello, World!');
-    emit('Hello, Word!'); ////
+    emit('Hello, Word!');
 };
+
 
 http($handler)->start();
