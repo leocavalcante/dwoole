@@ -13,3 +13,4 @@ RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" \
 
 ADD docker-entrypoint.sh watch.php /usr/local/bin/
 ENTRYPOINT [ "sh", "/usr/local/bin/docker-entrypoint.sh" ]
+EXPOSE 9501
