@@ -1,4 +1,4 @@
-FROM php:7.4-alpine
+FROM php:8.0-alpine
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
@@ -12,7 +12,7 @@ RUN apk add --no-cache $PHPIZE_DEPS git openssl-dev oniguruma-dev \
     pcntl \
     sockets \
   && echo "opcache.enable_cli=1" >> /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini \
-  && git clone -b v4.5.8 https://github.com/swoole/swoole-src.git \
+  && git clone -b v4.5.9 https://github.com/swoole/swoole-src.git \
   && cd swoole-src \
   && phpize \
   && ./configure \
